@@ -1,0 +1,13 @@
+﻿<Application x:Class="AuctionScraper.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AuctionScraper"
+             xmlns:ViewModels="clr-namespace:AuctionScraper.ViewModels"
+             xmlns:View="clr-namespace:AuctionScraper.Views"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <DataTemplate DataType="{x:Type ViewModels:MainContentViewModel}">
+            <View:MainContentView/>
+        </DataTemplate>
+    </Application.Resources>
+</Application>
