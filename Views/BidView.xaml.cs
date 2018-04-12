@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,20 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AuctionScraper.ViewModels;
-namespace AuctionScraper
+
+namespace AuctionScraper.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for BidView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class BidView : UserControl
     {
-        public object MainContentViewModel { get; set; }
-        public MainWindow(IMainContentViewModel mainContentViewModel)
+        public BidView()
         {
-            MainContentViewModel = mainContentViewModel;
-            DataContext = this;
-
             InitializeComponent();
         }
     }

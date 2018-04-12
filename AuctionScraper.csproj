@@ -56,8 +56,17 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>packages\Castle.Core.4.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="IronWebScraper, Version=4.0.4.29861, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\IronWebScraper.4.0.4.3\lib\net452\IronWebScraper.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Factory, Version=3.3.2.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>packages\Ninject.Extensions.Factory.3.3.2\lib\net45\Ninject.Extensions.Factory.dll</HintPath>
     </Reference>
     <Reference Include="Prism, Version=7.0.0.396, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>packages\Prism.Core.7.0.0.396\lib\net45\Prism.dll</HintPath>
@@ -66,6 +75,7 @@
       <HintPath>packages\PropertyChanged.Fody.2.5.3\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
@@ -89,12 +99,27 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\ActionCommand.cs" />
+    <Compile Include="Models\AuctionDetailScraper.cs" />
     <Compile Include="Models\Bid.cs" />
+    <Compile Include="Models\BidData.cs" />
+    <Compile Include="Models\BidDataItem.cs" />
     <Compile Include="Models\BidHistory.cs" />
+    <Compile Include="Models\BidHistoryItem.cs" />
+    <Compile Include="Models\Events.cs" />
+    <Compile Include="Models\Helper.cs" />
     <Compile Include="Models\ViewModelBase.cs" />
     <Compile Include="Models\WorkSpaceViewModel.cs" />
     <Compile Include="NinjetModel.cs" />
+    <Compile Include="Services\DataService.cs" />
+    <Compile Include="ViewModels\BidDetailViewModel.cs" />
+    <Compile Include="ViewModels\BidViewModel.cs" />
     <Compile Include="ViewModels\MainContentViewModel.cs" />
+    <Compile Include="Views\BidDetailView.xaml.cs">
+      <DependentUpon>BidDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BidView.xaml.cs">
+      <DependentUpon>BidView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainContentView.xaml.cs">
       <DependentUpon>MainContentView.xaml</DependentUpon>
     </Compile>
@@ -110,6 +135,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\BidDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BidView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainContentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,9 +176,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Fody.3.0.3\build\Fody.targets" Condition="Exists('packages\Fody.3.0.3\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

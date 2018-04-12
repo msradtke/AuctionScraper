@@ -3,11 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:AuctionScraper"
              xmlns:ViewModels="clr-namespace:AuctionScraper.ViewModels"
-             xmlns:View="clr-namespace:AuctionScraper.Views"
-             StartupUri="MainWindow.xaml">
+             xmlns:View="clr-namespace:AuctionScraper.Views">
     <Application.Resources>
+        <DataTemplate DataType="{x:Type ViewModels:BidDetailViewModel}">
+            <View:BidDetailView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModels:BidViewModel}">
+            <View:BidView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type ViewModels:MainContentViewModel}">
             <View:MainContentView/>
         </DataTemplate>
+
+
+        <Style TargetType="DataGrid">
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="CanUserSortColumns" Value="true"/>
+            <Setter Property="IsReadOnly" Value="False"/>
+            <Setter Property="CanUserReorderColumns" Value="False"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+            <Setter Property="CanUserResizeColumns" Value="False"/>
+            <Setter Property="SelectionUnit" Value="FullRow"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="IsSynchronizedWithCurrentItem" Value="True"/>
+            <Setter Property="Background" Value="White" />
+            <Setter Property="HorizontalGridLinesBrush" Value="WhiteSmoke" />
+            <Setter Property="VerticalGridLinesBrush" Value="WhiteSmoke" />
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="CornflowerBlue"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White"/>
+                <!-- Background of selected item when focussed -->
+            </Style.Resources>
+
+        </Style>
+
     </Application.Resources>
 </Application>

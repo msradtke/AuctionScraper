@@ -7,12 +7,12 @@ using System.Xml.Serialization;
 
 namespace AuctionScraper.Models
 {
-    public class BidHistory
+    [Serializable]
+    public class BidHistoryItem
     {
-        public BidHistory()
-        {
-            BidHistoryItems = new List<BidHistoryItem>();
-        }
-        public List<BidHistoryItem> BidHistoryItems { get; set; }
+        [XmlElement]
+        public Bid Bid { get; set; }
+        [XmlElement]
+        public DateTime DateTime { get; set; }
     }
 }

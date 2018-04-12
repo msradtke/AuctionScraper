@@ -7,10 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <StackPanel>
-            <Button Content="Start" Command="{Binding ScrapeCommand}"/>
-            <Button Content="Stop" Command="{Binding StopScrapeCommand}"/>
-            
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Content="Start" Command="{Binding ScrapeCommand}"/>
+        <Button Grid.Row="1" Content="Save" Command="{Binding SaveBidDataCommand}"/>
+        <Grid Grid.Row="2">
+            <ContentControl Content="{Binding BidViewModel}"/>
+        </Grid>
     </Grid>
 </UserControl>
