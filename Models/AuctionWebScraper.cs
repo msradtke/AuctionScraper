@@ -54,9 +54,5 @@ namespace AuctionScraper.Models
 
         public List<Bid> Bids { get; set; }
     }
-
-    public class Bid
-    {
-        public string Name { get; set; }
-    }
+    
 }

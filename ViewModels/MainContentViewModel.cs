@@ -28,7 +28,7 @@ namespace AuctionScraper.ViewModels
 
         void StopScrape()
         {
-            Scraper.Stop();
+            //Scraper.Stop();            
         }
     }
 }
