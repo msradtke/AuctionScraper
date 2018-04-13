@@ -52,12 +52,13 @@ namespace AuctionScraper.ViewModels
                         vm.CurrentBid = item.Bid.CurrentBid;
                         vm.BidCount = item.Bid.BidCount;
                         vm.LotNumber = item.Bid.LotNumber;
+                        vm.DetailUrl = item.Bid.DetailUrl;
                         var previousBid = BidHistory.BidHistoryItems.Where(x => x.Bid.LotNumber == item.Bid.LotNumber && x.DateTime < item.DateTime).OrderByDescending(x => x.DateTime).FirstOrDefault();
                         if (previousBid != null)
                         {
                             vm.PreviousBidAmount = previousBid.Bid.CurrentBid;
                             vm.PreviousBidCount = previousBid.Bid.BidCount;
-                            vm.PreviousDateTime = previousBid.DateTime;
+                            vm.PreviousBidDateTime = previousBid.DateTime;
                         }
 
                         BidActivityHistoryViewModel.BidHistoryItems.Add(vm);
@@ -83,6 +84,7 @@ namespace AuctionScraper.ViewModels
         public DateTime DateTime { get; set; }
         public int PreviousBidCount { get; set; }
         public double PreviousBidAmount { get; set; }
-        public DateTime PreviousDateTime { get; set; }
+        public DateTime PreviousBidDateTime { get; set; }
+        public string DetailUrl { get; set; }
     }
 }

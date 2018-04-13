@@ -104,7 +104,7 @@ namespace AuctionScraper.Services
 
             if (currentBids.Count < newBids.Count)
             {
-                var onlyNew = newBids.Except(currentBids).ToList();
+                var onlyNew = newBids.Where(x=>currentBids.FirstOrDefault(y=>y.LotNumber == x.LotNumber) == null).ToList();
 
                 AddBidDataToFile(onlyNew);
 
@@ -201,7 +201,7 @@ namespace AuctionScraper.Services
             {
                 
                 using (HttpResponseMessage response = await client.GetAsync(detailUrl))
-                {
+                {                    
                     using (HttpContent content = response.Content)
                     {
                         var read = await content.ReadAsStringAsync();

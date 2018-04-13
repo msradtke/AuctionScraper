@@ -9,13 +9,25 @@
     <Grid>
         <DataGrid ItemsSource="{Binding BidHistoryItems,UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="LotNumber" Binding="{Binding LotNumber}"/>
+                <DataGridTemplateColumn Header="Lot Number" SortMemberPath="LotNumber" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid  HorizontalAlignment="Right">
+                                <TextBlock >
+                                <Hyperlink Command="{Binding NavigateCommand}" CommandParameter="{Binding DetailUrl}">
+                                    <TextBlock Text="{Binding LotNumber}" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="DateTime" Binding="{Binding DateTime}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Bid Count" Binding="{Binding BidCount}"/>
                 <DataGridTextColumn Header="Bid Amount" Binding="{Binding CurrentBid, StringFormat=c}"/>
-                <DataGridTextColumn Header="Previous Bid" Binding="{Binding PreviousBidDateTime, StringFormat=c}"/>
-                <DataGridTextColumn Header="Previous Amount" Binding="{Binding PreviousBidAmount, StringFormat=c}"/>
+                <DataGridTextColumn Header="Previous DateTime" Binding="{Binding PreviousBidDateTime}"/>
+                <DataGridTextColumn Header="Previous AmounBidt" Binding="{Binding PreviousBidAmount, StringFormat=c}"/>
                 <DataGridTextColumn Header="Previous Bid Count" Binding="{Binding PreviousBidCount}"/>
             </DataGrid.Columns>
         </DataGrid>

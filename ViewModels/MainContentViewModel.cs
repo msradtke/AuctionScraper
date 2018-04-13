@@ -25,7 +25,7 @@ namespace AuctionScraper.ViewModels
 
             Bids = new ObservableCollection<Bid>();
 
-            
+
 
             _dataService = new DataService();
             _dataService.Initialize();
@@ -42,7 +42,7 @@ namespace AuctionScraper.ViewModels
             SaveBidDataCommand = new ActionCommand(SaveBidData);
             SetTimer();
         }
-        public ICommand ScrapeCommand{ get; }
+        public ICommand ScrapeCommand { get; }
         public ICommand SaveBidDataCommand { get; }
 
 
@@ -55,9 +55,10 @@ namespace AuctionScraper.ViewModels
 
         void SetTimer()
         {
-            Timer timer = new Timer(10*60*1000);
+            Timer timer = new Timer(10 * 60 * 1000);
             timer.Elapsed += OnTimedEvent;
             timer.Enabled = true;
+            timer.Start();
         }
 
         private void OnTimedEvent(object sender, ElapsedEventArgs e)
@@ -78,17 +79,20 @@ namespace AuctionScraper.ViewModels
 
         void NewBidResponse(List<Bid> bids)
         {
-            
+
             var changes = _dataService.CheckForBidChanges(Bids.ToList(), bids);
-            if(changes)
+            if (changes)
             {
                 Bids = _dataService.GetCurrentBidsFromHistory();
-                BidViewModel.SetBids(Bids);
-                BidHistory = _dataService.GetBidHistory();
-                ContentContainerViewModel.SetBidHistory(BidHistory);
+                App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+                {
+                    BidViewModel.SetBids(Bids);
+                    BidHistory = _dataService.GetBidHistory();
+                    ContentContainerViewModel.SetBidHistory(BidHistory);
+                });
             }
 
-            
+
         }
 
         void SaveBidData()
@@ -107,7 +111,7 @@ namespace AuctionScraper.ViewModels
                 if (String.IsNullOrWhiteSpace(bidData.PictureUrl))
                 {
                     changes = true;
-                       var pic = await _dataService.GetPictureUrl(bid.DetailUrl);
+                    var pic = await _dataService.GetPictureUrl(bid.DetailUrl);
                     bidData.PictureUrl = "http://machinerymax.com/" + pic;
                 }
             }

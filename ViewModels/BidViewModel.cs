@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace AuctionScraper.ViewModels
 {
@@ -16,6 +17,7 @@ namespace AuctionScraper.ViewModels
             Bids = bids;
             BidData = bidData;
             BidHistory = bidHistory;
+            
             SetBidAggregateViewModel();
         }
         public void SetBids(ObservableCollection<Bid> bids)
@@ -43,6 +45,7 @@ namespace AuctionScraper.ViewModels
                 BidAggregateViewModels.Add(vm);
             }
         }
+        
         public ObservableCollection<Bid> Bids { get; set; }
         public BidData BidData { get; set; }
         public ObservableCollection<BidAggregateViewModel> BidAggregateViewModels { get; set; }
@@ -51,13 +54,27 @@ namespace AuctionScraper.ViewModels
         public BidDetailViewModel SelectedBidDetailViewModel { get; set; }
         public BidAggregateViewModel SelectedItem { get; set; }
 
+
     }
 
     public class BidAggregateViewModel : WorkspaceViewModel
     {
+        public BidAggregateViewModel()
+        {
+            NavigateCommand = new ActionCommand(Navigate, () => true);
+        }
+        public ICommand NavigateCommand { get; set; }
+
         public Bid Bid { get; set; }
         public BidDataItem BidDataItem { get; set; }
         public BidDetailViewModel BidDetailViewModel { get; set; }
         public bool IsSelected { get; set; }
+
+
+        void Navigate(object test)
+        {
+            var link  = test.ToString();
+            System.Diagnostics.Process.Start(link);
+        }
     }
 }

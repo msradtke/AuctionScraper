@@ -14,11 +14,23 @@
         
         <DataGrid SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding BidAggregateViewModels,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Lot Number" Binding="{Binding Bid.LotNumber}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Lot Number" SortMemberPath="Bid.LotNumber">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid  HorizontalAlignment="Right">
+                                <TextBlock >
+                                <Hyperlink Command="{Binding NavigateCommand}" CommandParameter="{Binding Bid.DetailUrl}">
+                                    <TextBlock Text="{Binding Bid.LotNumber}" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Checked" SortMemberPath="BidDataItem.IsStarred">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid  HorizontalAlignment="Center">
                                 <CheckBox IsChecked="{Binding BidDataItem.IsStarred, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </DataTemplate>
