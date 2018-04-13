@@ -31,7 +31,7 @@ namespace AuctionScraper.ViewModels
 
             foreach (var bid in Bids)
             {
-                var dataItem = BidData.BidDataItems.FirstOrDefault(x => x.BidIndex == bid.Index);
+                var dataItem = BidData.BidDataItems.FirstOrDefault(x => x.LotNumber == bid.LotNumber);
 
                 var vm = new BidAggregateViewModel();
                 vm.Bid = bid;

@@ -31,7 +31,7 @@ namespace AuctionScraper.Models
             
             Bids = bids;
             foreach (var bid in bids)
-                Request(bid.DetailUrl, ParseDetail, new MetaData { { "index", bid.Index } });
+                Request(bid.DetailUrl, ParseDetail, new MetaData { { "index", bid.LotNumber } });
 
         }
         public void ParseDetail(Response response)

@@ -8,7 +8,7 @@ namespace AuctionScraper.Models
 {
     public class BidDataItem
     {
-        public int BidIndex { get; set; }
+        public int LotNumber { get; set; }
         public Bid Bid { get; set; }
         public string Notes { get; set; }
         public bool IsStarred { get; set; }

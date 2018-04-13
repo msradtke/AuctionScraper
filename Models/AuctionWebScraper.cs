@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using IronWebScraper;
 using Prism.Events;
@@ -49,6 +50,8 @@ namespace AuctionScraper.Models
             {
                 string strTitle = title_link.TextContentClean;
                 string detailUrl = title_link.Attributes["href"];
+                
+                
                 var newBid = new Bid();
                 newBid.Name = strTitle;
                 newBid.DetailUrl = detailUrl;
@@ -60,6 +63,16 @@ namespace AuctionScraper.Models
 
             }
             i = beginBidLength;
+            foreach (var title_link in response.Css("h1.title em"))
+            {
+                string em = title_link.InnerTextClean;
+                var resultString = Regex.Match(em, @"\d+").Value;
+                Bids[i].LotNumber= Int32.Parse(resultString);
+
+                ++i;
+            }
+            
+                i = beginBidLength;
             foreach (var priceString in response.Css("span.NumberPart"))
             {
                 string s = priceString.TextContentClean;
@@ -72,7 +85,6 @@ namespace AuctionScraper.Models
                 {
 
                 }
-                Bids[i].Index = i + 1;
                 ++i;
             }
 

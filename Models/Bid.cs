@@ -11,7 +11,7 @@ namespace AuctionScraper.Models
         public string Name { get; set; }
         public int BidCount { get; set; }
         public double CurrentBid { get; set; }
-        public int Index { get; set; }
+        public int LotNumber { get; set; }
         public string PictureUrl { get; set; }
         public string DetailUrl { get; set; }
 

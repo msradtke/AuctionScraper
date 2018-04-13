@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Input;
 
 namespace AuctionScraper.ViewModels
@@ -39,6 +40,7 @@ namespace AuctionScraper.ViewModels
 
             ScrapeCommand = new ActionCommand(Scrape);
             SaveBidDataCommand = new ActionCommand(SaveBidData);
+            SetTimer();
         }
         public ICommand ScrapeCommand{ get; }
         public ICommand SaveBidDataCommand { get; }
@@ -50,6 +52,19 @@ namespace AuctionScraper.ViewModels
         public BidHistory BidHistory { get; set; }
         public BidViewModel BidViewModel { get; set; }
         public ContentContainerViewModel ContentContainerViewModel { get; set; }
+
+        void SetTimer()
+        {
+            Timer timer = new Timer(10*60*1000);
+            timer.Elapsed += OnTimedEvent;
+            timer.Enabled = true;
+        }
+
+        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            Scrape();
+        }
+
         void Scrape()
         {
             Scraper = _auctionWebScraperFactory.CreateAuctionWebScraper();
@@ -86,7 +101,9 @@ namespace AuctionScraper.ViewModels
             bool changes = false;
             foreach (var bid in Bids)
             {
-                var bidData = BidData.BidDataItems.FirstOrDefault(x => x.BidIndex == bid.Index);
+                var bidData = BidData.BidDataItems.FirstOrDefault(x => x.LotNumber == bid.LotNumber);
+                if (bidData == null)
+                    continue;
                 if (String.IsNullOrWhiteSpace(bidData.PictureUrl))
                 {
                     changes = true;

@@ -9,7 +9,7 @@
     <Grid>
         <DataGrid ItemsSource="{Binding BidHistoryItems,UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Index" Binding="{Binding Index}"/>
+                <DataGridTextColumn Header="LotNumber" Binding="{Binding LotNumber}"/>
                 <DataGridTextColumn Header="DateTime" Binding="{Binding DateTime}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Bid Count" Binding="{Binding BidCount}"/>

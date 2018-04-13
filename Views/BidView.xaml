@@ -14,7 +14,7 @@
         
         <DataGrid SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding BidAggregateViewModels,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Index" Binding="{Binding Bid.Index}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Lot Number" Binding="{Binding Bid.LotNumber}"></DataGridTextColumn>
                 <DataGridTemplateColumn Header="Checked" SortMemberPath="BidDataItem.IsStarred">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

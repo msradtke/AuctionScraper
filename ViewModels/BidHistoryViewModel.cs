@@ -17,7 +17,7 @@ namespace AuctionScraper.ViewModels
 
         public void SetBidHistories(Bid bid)
         {
-            var allHistoryItems = BidHistory.BidHistoryItems.Where(x => x.Bid.Index == bid.Index);
+            var allHistoryItems = BidHistory.BidHistoryItems.Where(x => x.Bid.LotNumber == bid.LotNumber);
             BidHistoryAggregateViewModel = new BidHistoryAggregateViewModel();
             foreach (var item in allHistoryItems)
             {

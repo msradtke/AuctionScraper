@@ -59,7 +59,7 @@ namespace AuctionScraper.Services
                 BidHistoryItem latest = null;
                 foreach (var bidHistoryItems in _bidhistory.BidHistoryItems)
                 {
-                    if (bidHistoryItems.Bid.Index == bidDataItem.Bid.Index)
+                    if (bidHistoryItems.Bid.LotNumber == bidDataItem.Bid.LotNumber)
                         if (latest == null)
                             latest = bidHistoryItems;
                         else if (bidHistoryItems.DateTime > latest.DateTime)
@@ -79,7 +79,7 @@ namespace AuctionScraper.Services
             foreach (var nBid in newBids)
             {
                 bool changed = false;
-                var cBid = currentBids.FirstOrDefault(x => x.Index == nBid.Index);
+                var cBid = currentBids.FirstOrDefault(x => x.LotNumber == nBid.LotNumber);
                 if (cBid == null)
                     changed = true;
                 else if (nBid != null)
@@ -158,7 +158,7 @@ namespace AuctionScraper.Services
             {
                 var dataItem = new BidDataItem();
                 dataItem.Bid = bid;
-                dataItem.BidIndex = bid.Index;
+                dataItem.LotNumber = bid.LotNumber;
 
                 XElement element = dataItem.ToXElement<BidDataItem>();
                 items.Add(element);

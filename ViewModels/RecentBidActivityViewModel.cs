@@ -51,8 +51,8 @@ namespace AuctionScraper.ViewModels
                         vm.DateTime = item.DateTime;
                         vm.CurrentBid = item.Bid.CurrentBid;
                         vm.BidCount = item.Bid.BidCount;
-                        vm.Index = item.Bid.Index;
-                        var previousBid = BidHistory.BidHistoryItems.Where(x => x.Bid.Index == item.Bid.Index && x.DateTime < item.DateTime).OrderByDescending(x => x.DateTime).FirstOrDefault();
+                        vm.LotNumber = item.Bid.LotNumber;
+                        var previousBid = BidHistory.BidHistoryItems.Where(x => x.Bid.LotNumber == item.Bid.LotNumber && x.DateTime < item.DateTime).OrderByDescending(x => x.DateTime).FirstOrDefault();
                         if (previousBid != null)
                         {
                             vm.PreviousBidAmount = previousBid.Bid.CurrentBid;
@@ -76,7 +76,7 @@ namespace AuctionScraper.ViewModels
     }
     public class BidActivityAggregateViewModel : WorkspaceViewModel
     {
-        public int Index{ get; set; }
+        public int LotNumber{ get; set; }
         public string Name { get; set; }
         public int BidCount { get; set; }
         public double CurrentBid { get; set; }
