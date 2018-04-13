@@ -26,7 +26,16 @@ namespace AuctionScraper.Services
             _bidHistoryPath = AppDomain.CurrentDomain.BaseDirectory + @"BidHistory.xml";
             _bidDataPath = AppDomain.CurrentDomain.BaseDirectory + @"BidData.xml";
         }
-
+        public BidHistory GetBidHistory()
+        {
+            BidHistory bidHistory;
+            XmlSerializer serializer = new XmlSerializer(typeof(BidHistory));
+            using (var reader = XmlReader.Create(_bidHistoryPath))
+            {
+                bidHistory = (BidHistory)serializer.Deserialize(reader);
+            }
+            return bidHistory;
+        }
         public ObservableCollection<Bid> GetCurrentBidsFromHistory()
         {
             ObservableCollection<Bid> currentBids = new ObservableCollection<Bid>();

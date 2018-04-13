@@ -108,20 +108,36 @@
     <Compile Include="Models\Events.cs" />
     <Compile Include="Models\Helper.cs" />
     <Compile Include="Models\ViewModelBase.cs" />
+    <Compile Include="Models\ViewModelContainer.cs" />
     <Compile Include="Models\WorkSpaceViewModel.cs" />
     <Compile Include="NinjetModel.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="ViewModels\BidDetailViewModel.cs" />
+    <Compile Include="ViewModels\BidHistoryViewModel.cs" />
     <Compile Include="ViewModels\BidViewModel.cs" />
+    <Compile Include="ViewModels\ContentContainerViewModel.cs" />
     <Compile Include="ViewModels\MainContentViewModel.cs" />
+    <Compile Include="ViewModels\RecentBidActivityViewModel.cs" />
+    <Compile Include="Views\ActivityView.xaml.cs">
+      <DependentUpon>ActivityView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BidDetailView.xaml.cs">
       <DependentUpon>BidDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BidHistoryView.xaml.cs">
+      <DependentUpon>BidHistoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BidView.xaml.cs">
       <DependentUpon>BidView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ContentContainerView.xaml.cs">
+      <DependentUpon>ContentContainerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainContentView.xaml.cs">
       <DependentUpon>MainContentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecentBidActivityView.xaml.cs">
+      <DependentUpon>RecentBidActivityView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -135,7 +151,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ActivityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BidDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BidHistoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,7 +167,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ContentContainerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainContentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecentBidActivityView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

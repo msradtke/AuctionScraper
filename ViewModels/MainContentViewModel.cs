@@ -23,13 +23,19 @@ namespace AuctionScraper.ViewModels
             EventAggregator.GetEvent<AuctionNewResponeEvent>().Subscribe(NewBidResponse);
 
             Bids = new ObservableCollection<Bid>();
+
             
+
             _dataService = new DataService();
             _dataService.Initialize();
             Bids = _dataService.GetCurrentBidsFromHistory();
             BidData = _dataService.GetBidData();
+            BidHistory = _dataService.GetBidHistory();
             LoadPictureUrl();
-            BidViewModel = new BidViewModel(Bids, BidData);
+
+            BidViewModel = new BidViewModel(Bids, BidData, BidHistory);
+            ContentContainerViewModel = new ContentContainerViewModel(BidViewModel, BidHistory);
+
 
             ScrapeCommand = new ActionCommand(Scrape);
             SaveBidDataCommand = new ActionCommand(SaveBidData);
@@ -41,8 +47,9 @@ namespace AuctionScraper.ViewModels
         public AuctionWebScraper Scraper { get; set; }
         public ObservableCollection<Bid> Bids { get; set; }
         public BidData BidData { get; set; }
-
+        public BidHistory BidHistory { get; set; }
         public BidViewModel BidViewModel { get; set; }
+        public ContentContainerViewModel ContentContainerViewModel { get; set; }
         void Scrape()
         {
             Scraper = _auctionWebScraperFactory.CreateAuctionWebScraper();
@@ -62,6 +69,8 @@ namespace AuctionScraper.ViewModels
             {
                 Bids = _dataService.GetCurrentBidsFromHistory();
                 BidViewModel.SetBids(Bids);
+                BidHistory = _dataService.GetBidHistory();
+                ContentContainerViewModel.SetBidHistory(BidHistory);
             }
 
             

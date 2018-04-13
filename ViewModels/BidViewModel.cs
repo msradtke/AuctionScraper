@@ -10,10 +10,12 @@ namespace AuctionScraper.ViewModels
 {
     public class BidViewModel : WorkspaceViewModel
     {
-        public BidViewModel(ObservableCollection<Bid> bids, BidData bidData)
+        public BidViewModel(ObservableCollection<Bid> bids, BidData bidData,BidHistory bidHistory)
         {
+            HeaderText = "Bid Items";
             Bids = bids;
             BidData = bidData;
+            BidHistory = bidHistory;
             SetBidAggregateViewModel();
         }
         public void SetBids(ObservableCollection<Bid> bids)
@@ -34,7 +36,7 @@ namespace AuctionScraper.ViewModels
                 var vm = new BidAggregateViewModel();
                 vm.Bid = bid;
                 vm.BidDataItem = dataItem;
-                vm.BidDetailViewModel = new BidDetailViewModel();
+                vm.BidDetailViewModel = new BidDetailViewModel(BidHistory);
                 vm.BidDetailViewModel.Bid = bid;
                 vm.BidDetailViewModel.BidDataItem = dataItem;
                 
@@ -44,6 +46,7 @@ namespace AuctionScraper.ViewModels
         public ObservableCollection<Bid> Bids { get; set; }
         public BidData BidData { get; set; }
         public ObservableCollection<BidAggregateViewModel> BidAggregateViewModels { get; set; }
+        public BidHistory BidHistory { get; set; }
 
         public BidDetailViewModel SelectedBidDetailViewModel { get; set; }
         public BidAggregateViewModel SelectedItem { get; set; }

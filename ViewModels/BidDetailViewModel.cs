@@ -9,11 +9,23 @@ namespace AuctionScraper.ViewModels
 {
     public class BidDetailViewModel : WorkspaceViewModel
     {
-        public BidDetailViewModel()
-        {
+        private Bid _bid;
 
+        public BidDetailViewModel(BidHistory bidHistory)
+        {
+            BidHistoryViewModel = new BidHistoryViewModel(bidHistory);
         }
-        public Bid Bid { get; set; }
+        public Bid Bid
+        {
+            get => _bid;
+            set
+            {               
+                _bid = value;
+                BidHistoryViewModel.SetBidHistories(_bid);
+            }
+        }
         public BidDataItem BidDataItem { get; set; }
+        public BidHistory BidHistory { get; set; }
+        public BidHistoryViewModel BidHistoryViewModel { get; set; }
     }
 }

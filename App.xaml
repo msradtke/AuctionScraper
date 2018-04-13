@@ -3,16 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:AuctionScraper"
              xmlns:ViewModels="clr-namespace:AuctionScraper.ViewModels"
-             xmlns:View="clr-namespace:AuctionScraper.Views">
+             xmlns:Views="clr-namespace:AuctionScraper.Views">
     <Application.Resources>
+        <DataTemplate DataType="{x:Type ViewModels:BidActivityHistoryViewModel}">
+            <Views:ActivityView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModels:ContentContainerViewModel}">
+            <Views:ContentContainerView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModels:RecentBidActivityViewModel}">
+            <Views:RecentBidActivityView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModels:BidHistoryViewModel}">
+            <Views:BidHistoryView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type ViewModels:BidDetailViewModel}">
-            <View:BidDetailView/>
+            <Views:BidDetailView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type ViewModels:BidViewModel}">
-            <View:BidView/>
+            <Views:BidView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type ViewModels:MainContentViewModel}">
-            <View:MainContentView/>
+            <Views:MainContentView/>
         </DataTemplate>
 
 
