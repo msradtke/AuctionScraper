@@ -86,5 +86,16 @@ namespace AuctionScraper.ViewModels
         public double PreviousBidAmount { get; set; }
         public DateTime PreviousBidDateTime { get; set; }
         public string DetailUrl { get; set; }
+
+        public ICommand NavigateCommand { get; }
+        public BidActivityAggregateViewModel()
+        {
+            NavigateCommand = new ActionCommand(Navigate, () => true);
+        }
+        void Navigate(object test)
+        {
+            var link = test.ToString();
+            System.Diagnostics.Process.Start(link);
+        }
     }
 }

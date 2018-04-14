@@ -104,7 +104,7 @@ namespace AuctionScraper.Services
 
             if (currentBids.Count < newBids.Count)
             {
-                var onlyNew = newBids.Where(x=>currentBids.FirstOrDefault(y=>y.LotNumber == x.LotNumber) == null).ToList();
+                var onlyNew = newBids.Where(x => currentBids.FirstOrDefault(y => y.LotNumber == x.LotNumber) == null).ToList();
 
                 AddBidDataToFile(onlyNew);
 
@@ -195,22 +195,44 @@ namespace AuctionScraper.Services
             }
         }
 
+        public async Task<string> GetBidder(string detailUrl, int bidCount)
+        {
+            var page = await GetDetailPage(detailUrl);
+            string startString = @"span class=""HighBidder"">";
+            var index = page.IndexOf(startString, StringComparison.Ordinal);
+            var start = index + startString.Length;
+            var end = page.IndexOf("<", start);
+
+            var bidder = page.Substring(start, end - start);
+
+            return bidder;
+        }
+
         public async Task<string> GetPictureUrl(string detailUrl)
+        {
+
+            var read = await GetDetailPage(detailUrl);
+
+            string search = @"<img id=""previewimg"" class=""img-responsive full"" src=""";
+            var index = read.IndexOf(search, StringComparison.Ordinal);
+            var start = index + search.Length;
+            var endQuote = read.IndexOf('"', start);
+            var link = read.Substring(start, endQuote - start);
+            return link;
+
+        }
+
+        public async Task<string> GetDetailPage(string detailUrl)
         {
             using (HttpClient client = new HttpClient())
             {
-                
+
                 using (HttpResponseMessage response = await client.GetAsync(detailUrl))
-                {                    
+                {
                     using (HttpContent content = response.Content)
                     {
                         var read = await content.ReadAsStringAsync();
-                        string search = @"<img id=""previewimg"" class=""img-responsive full"" src=""";
-                        var index = read.IndexOf(search, StringComparison.Ordinal);
-                        var start = index + search.Length;
-                        var endQuote = read.IndexOf('"', start);
-                        var link = read.Substring(start, endQuote - start);
-                        return link;
+                        return read;
                     }
                 }
             }

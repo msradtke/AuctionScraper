@@ -32,6 +32,7 @@ namespace AuctionScraper.ViewModels
             Bids = _dataService.GetCurrentBidsFromHistory();
             BidData = _dataService.GetBidData();
             BidHistory = _dataService.GetBidHistory();
+            GetBidder();
             LoadPictureUrl();
 
             BidViewModel = new BidViewModel(Bids, BidData, BidHistory);
@@ -100,6 +101,21 @@ namespace AuctionScraper.ViewModels
             _dataService.SaveBidData(BidData);
         }
 
+        async void GetBidder()
+        {
+            foreach (var bid in Bids)
+            {
+                var bidData = BidData.BidDataItems.FirstOrDefault(x => x.LotNumber == bid.LotNumber);
+                if (bidData == null)
+                    continue;
+                //if (String.IsNullOrWhiteSpace(bidData.PictureUrl))
+                {
+                    var bidder = await _dataService.GetBidder(bid.DetailUrl, bid.BidCount);
+                    
+                }
+            }
+
+        }
         async void LoadPictureUrl()
         {
             bool changes = false;
