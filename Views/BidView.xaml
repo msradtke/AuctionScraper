@@ -39,6 +39,7 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Bid.Name}" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Header="Bid Count" Binding="{Binding Bid.BidCount}" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Header="Current Bid" Binding="{Binding Bid.CurrentBid, StringFormat=c}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Bidder" Binding="{Binding Bid.Bidder, StringFormat=c}" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Width="*" Header="Notes" Binding="{Binding BidDataItem.Notes,Mode=TwoWay, StringFormat=c}"></DataGridTextColumn>                
             </DataGrid.Columns>
         </DataGrid>

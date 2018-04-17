@@ -13,7 +13,7 @@ namespace AuctionScraper.Models
         public string Notes { get; set; }
         public bool IsStarred { get; set; }
         public string PictureUrl { get; set; }
-        public string Bidder { get; set; }
+
 
     }
 }

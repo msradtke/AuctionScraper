@@ -56,7 +56,7 @@ namespace AuctionScraper.ViewModels
 
         void SetTimer()
         {
-            Timer timer = new Timer(10 * 60 * 1000);
+            Timer timer = new Timer(10*60*1000);
             timer.Elapsed += OnTimedEvent;
             timer.Enabled = true;
             timer.Start();
@@ -85,6 +85,7 @@ namespace AuctionScraper.ViewModels
             if (changes)
             {
                 Bids = _dataService.GetCurrentBidsFromHistory();
+                
                 App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
                 {
                     BidViewModel.SetBids(Bids);
@@ -92,7 +93,7 @@ namespace AuctionScraper.ViewModels
                     ContentContainerViewModel.SetBidHistory(BidHistory);
                 });
             }
-
+            GetBidder();
 
         }
 
@@ -103,18 +104,34 @@ namespace AuctionScraper.ViewModels
 
         async void GetBidder()
         {
-            foreach (var bid in Bids)
+            bool changes = false;
+            List<BidHistoryItem> bidHistoryItems = new List<BidHistoryItem>();
+            foreach (var bidHistory in BidHistory.BidHistoryItems)
             {
-                var bidData = BidData.BidDataItems.FirstOrDefault(x => x.LotNumber == bid.LotNumber);
-                if (bidData == null)
-                    continue;
-                //if (String.IsNullOrWhiteSpace(bidData.PictureUrl))
+                
+                if (String.IsNullOrWhiteSpace(bidHistory.Bid.Bidder))
                 {
-                    var bidder = await _dataService.GetBidder(bid.DetailUrl, bid.BidCount);
-                    
+                    var bidder = await _dataService.GetBidder(bidHistory.Bid.DetailUrl, bidHistory.Bid.BidCount);
+                    if (!String.IsNullOrWhiteSpace(bidder))
+                    {
+
+                        changes = true;
+                        bidHistory.Bid.Bidder = bidder;
+                        bidHistoryItems.Add(new BidHistoryItem { Bid = bidHistory.Bid, DateTime = bidHistory.DateTime });
+                    }
                 }
             }
 
+            if (changes)
+                _dataService.UpdateBidHistory(bidHistoryItems);
+
+            Bids = _dataService.GetCurrentBidsFromHistory();
+            App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+            {
+                BidViewModel.SetBids(Bids);
+                BidHistory = _dataService.GetBidHistory();
+                ContentContainerViewModel.SetBidHistory(BidHistory);
+            });
         }
         async void LoadPictureUrl()
         {

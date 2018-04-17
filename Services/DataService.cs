@@ -1,4 +1,6 @@
 ﻿using AuctionScraper.Models;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.PhantomJS;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -57,13 +59,13 @@ namespace AuctionScraper.Services
             foreach (var bidDataItem in _bidData.BidDataItems)
             {
                 BidHistoryItem latest = null;
-                foreach (var bidHistoryItems in _bidhistory.BidHistoryItems)
+                foreach (var item in _bidhistory.BidHistoryItems)
                 {
-                    if (bidHistoryItems.Bid.LotNumber == bidDataItem.Bid.LotNumber)
+                    if (item.Bid.LotNumber == bidDataItem.Bid.LotNumber)
                         if (latest == null)
-                            latest = bidHistoryItems;
-                        else if (bidHistoryItems.DateTime > latest.DateTime)
-                            latest = bidHistoryItems;
+                            latest = item;
+                        else if (item.DateTime > latest.DateTime)
+                            latest = item;
                 }
 
                 currentBids.Add(latest.Bid);
@@ -146,7 +148,22 @@ namespace AuctionScraper.Services
             }
             bidHistoryDocument.Save(_bidHistoryPath);
         }
+        public void UpdateBidHistory(List<BidHistoryItem> items)
+        {
+            XDocument bidHistoryDocument = XDocument.Load(_bidHistoryPath);
+            XElement root = bidHistoryDocument.Root;
+            var docHistoryItems = root.Element("BidHistoryItems");
 
+            foreach (var item in items)
+            {
+                var xmlItems = root.Descendants("BidHistoryItem").Where(x => x.Element("Bid").Element("LotNumber").Value == item.Bid.LotNumber.ToString() && DateTime.Parse(x.Element("DateTime").Value) == item.DateTime).Descendants("Bid");
+                foreach(var xmlItem in xmlItems)
+                {
+                    xmlItem.SetElementValue("Bidder", item.Bid.Bidder);
+                }
+            }
+            bidHistoryDocument.Save(_bidHistoryPath);
+        }
         public void AddBidDataToFile(List<Bid> newBids)
         {
             XDocument bidDataDoc = XDocument.Load(_bidDataPath);
@@ -197,7 +214,12 @@ namespace AuctionScraper.Services
 
         public async Task<string> GetBidder(string detailUrl, int bidCount)
         {
+
             var page = await GetDetailPage(detailUrl);
+
+            int newBidCount = GetBidCount(page);
+            if (newBidCount != bidCount)
+                return null;
             string startString = @"span class=""HighBidder"">";
             var index = page.IndexOf(startString, StringComparison.Ordinal);
             var start = index + startString.Length;
@@ -206,6 +228,26 @@ namespace AuctionScraper.Services
             var bidder = page.Substring(start, end - start);
 
             return bidder;
+        }
+
+        public int GetBidCount(string page)
+        {
+            string preStartString = @"<span class=""awe-rt-AcceptedListingActionCount""";
+            var preStartindex = page.IndexOf(preStartString, StringComparison.Ordinal);            
+            var preStart = preStartindex + preStartString.Length;
+
+            var startIndex = page.IndexOf(">", preStart);
+            var start = startIndex + 1;
+
+            var end = page.IndexOf("<", startIndex);
+
+            var bCount = page.Substring(start, end - start);
+
+            int bidCount;
+            var tryInt = Int32.TryParse(bCount,out bidCount);
+            if (!tryInt)
+                bidCount = -1;
+            return bidCount;
         }
 
         public async Task<string> GetPictureUrl(string detailUrl)
@@ -237,7 +279,6 @@ namespace AuctionScraper.Services
                 }
             }
         }
-
 
     }
 }

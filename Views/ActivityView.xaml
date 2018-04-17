@@ -26,6 +26,7 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Bid Count" Binding="{Binding BidCount}"/>
                 <DataGridTextColumn Header="Bid Amount" Binding="{Binding CurrentBid, StringFormat=c}"/>
+                <DataGridTextColumn Header="Bidder" Binding="{Binding Bidder}"/>
                 <DataGridTextColumn Header="Previous DateTime" Binding="{Binding PreviousBidDateTime}"/>
                 <DataGridTextColumn Header="Previous AmounBidt" Binding="{Binding PreviousBidAmount, StringFormat=c}"/>
                 <DataGridTextColumn Header="Previous Bid Count" Binding="{Binding PreviousBidCount}"/>

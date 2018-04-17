@@ -53,6 +53,8 @@ namespace AuctionScraper.ViewModels
                         vm.BidCount = item.Bid.BidCount;
                         vm.LotNumber = item.Bid.LotNumber;
                         vm.DetailUrl = item.Bid.DetailUrl;
+                        vm.Bidder = item.Bid.Bidder;
+
                         var previousBid = BidHistory.BidHistoryItems.Where(x => x.Bid.LotNumber == item.Bid.LotNumber && x.DateTime < item.DateTime).OrderByDescending(x => x.DateTime).FirstOrDefault();
                         if (previousBid != null)
                         {
@@ -86,7 +88,7 @@ namespace AuctionScraper.ViewModels
         public double PreviousBidAmount { get; set; }
         public DateTime PreviousBidDateTime { get; set; }
         public string DetailUrl { get; set; }
-
+        public string Bidder { get; set; }
         public ICommand NavigateCommand { get; }
         public BidActivityAggregateViewModel()
         {
